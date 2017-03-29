@@ -1,0 +1,23 @@
+{
+    "name": "yeepay/sdk-php",
+    "description": "易宝支付对接需要的接口",
+    "email": "wangzhoudong@foxmail.com",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "wangzhouodng",
+            "email": "wangzhoudong@foxmail.com"
+        }
+    ],
+    "require": {
+        "php":">=5.3"
+    },
+    "require-dev" : {
+        "phpunit/phpunit": "~4.0"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {"YeePay\\": "src/"}
+    }
+}
