@@ -23,11 +23,14 @@ class Request {
 
     public $curlHandle;
 
-    public function __construct($url,$post,$file="") {
+    public $response;
+
+
+
+    public function __construct($url,$post,$file=[]) {
         $this->requestUrl = $url;
         $this->postField = $post;
         $this->postFile = $file;
-
 
     }
 
@@ -98,25 +101,30 @@ class Request {
         ));
     }
 
+
+    public function getResponse() {
+        $this->response;
+    }
+
     public function send() {
         $this->curlHandle = curl_init();
-            curl_setopt($this->curlHandle, CURLOPT_URL, $this->requestUrl);
-            curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, $this->getHeader());
-            curl_setopt($this->curlHandle, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($this->curlHandle, CURLOPT_CONNECTTIMEOUT, 30);
-            curl_setopt($this->curlHandle, CURLOPT_BINARYTRANSFER,true);
-            $this->setPost();
-            curl_setopt($this->curlHandle, CURLOPT_USERAGENT, "Yeepay ZGT PHPSDK v1.1x");
-            curl_setopt($this->curlHandle, CURLOPT_TIMEOUT, 30);
-            curl_setopt($this->curlHandle, CURLOPT_HEADER, false);
-            curl_setopt($this->curlHandle,CURLOPT_POST, true);
+        curl_setopt($this->curlHandle, CURLOPT_URL, $this->requestUrl);
+        curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, $this->getHeader());
+        curl_setopt($this->curlHandle, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($this->curlHandle, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($this->curlHandle, CURLOPT_BINARYTRANSFER,true);
+        $this->setPost();
+        curl_setopt($this->curlHandle, CURLOPT_USERAGENT, "Yeepay ZGT PHPSDK v1.1x");
+        curl_setopt($this->curlHandle, CURLOPT_TIMEOUT, 30);
+        curl_setopt($this->curlHandle, CURLOPT_HEADER, false);
+        curl_setopt($this->curlHandle,CURLOPT_POST, true);
 
-            $response = curl_exec($this->curlHandle);
-            $this->responseCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
-            $this->responseInfo =curl_getinfo($this->curlHandle);
-            curl_close ($this->responseInfo );
-            $this->responseInfo = null;
-            return $response;
+        $this->response = curl_exec($this->curlHandle);
+        $this->responseCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
+        $this->responseInfo =curl_getinfo($this->curlHandle);
+        curl_close ($this->curlHandle) ;
+        $this->responseInfo = null;
+        return $this->response;
 
     }
 }
